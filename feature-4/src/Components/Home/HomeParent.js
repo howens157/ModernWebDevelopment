@@ -77,8 +77,8 @@ export default function HomeParent() {
                 {clueData.clueIndex !== -1 ? 
                     (<><Clue catName={clueData.catName} airDate={clueData.airDate} clue={clueData.clues[clueData.clueIndex]} /><Answer clueData={{ catID: clueData.catID, clueIndex: clueData.clueIndex, topic: clueData.topic }} nextClue={nextClue} /></>) : <h1>You've run out of clues for this topic! Try a different one.</h1>
                 }
-                <TwitterFeed />
             </div>
+            <TwitterFeed />
         </>
     );
 };

@@ -8,8 +8,6 @@ const TwitterFeed = () => {
   const [ids, setIDs] = useState([]);
 
   // the useEffect hook is used here to load user data asynchronously
-  // we will discuss async data in class, for now you can utilize the pattern
-  // useEffect(function, array)
   useEffect(() => {
     console.log("fetching tweets");
     getTweets().then((data) => {
@@ -18,6 +16,7 @@ const TwitterFeed = () => {
     });
   }, []);
 
+  //options for the share tweet button
   const options = {
     "text": `I'm getting smarter by using @JeopardyTrainer\nTry it out with me!`,
     "data-size": "large"

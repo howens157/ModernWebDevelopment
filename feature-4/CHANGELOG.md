@@ -6,6 +6,9 @@
 - Added answer submission
 - Submitting an answer changes the user's stats
 - Added ability to override answer evaluation which would then update the user's stats
+- Added a log out button and forgot password functionality
+- Added a twitter feed module that renders on the home page which fetches tweets to render from a server
+- Added a share button that allows the user to share the app with friends and invite them to use it
  
 ### Changed
 - If a user has completed some clues in a category, they will resume that category

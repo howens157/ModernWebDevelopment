@@ -183,3 +183,7 @@ a {
   align-items: center;
   text-align: center;
 }
+
+.clue {
+  padding: 1rem;
+}

@@ -19,6 +19,21 @@ export default function HomeParent() {
         topicList: []
     });
 
+    function getNewCategory() {
+        GetCategory(clueData.topic).then((results) => {
+            setClues(prevClues => {
+                return {
+                    ...prevClues,
+                    airDate: results?.airDate,
+                    catName: results?.catName,
+                    catID: results?.catID,
+                    clues: results?.clues,
+                    clueIndex: results ? results.clueIndex : -1
+                };
+            });
+        });
+    }
+
     // Only retrieve topic list at beginning
     useEffect(() => {
         GetAllTopics().then((results) => {
@@ -29,21 +44,8 @@ export default function HomeParent() {
     }, []);
 
     // Update clue whenever topic is changed
-    // Add Parse.current.user() later
-    useEffect(() => {
-        GetCategory(clueData.topic).then((results) => {
-            setClues(prevClues => {
-                return {
-                    ...prevClues,
-                    airDate: results.airDate,
-                    catName: results.catName,
-                    catID: results.catID,
-                    clues: results.clues,
-                    clueIndex: 0
-                };
-            });
-        });
-    }, [clueData.topic]);
+    useEffect(getNewCategory, [clueData.topic]);
+
 
     // Pass to Topics component to switch topic
     function switchTopic(e) {
@@ -58,14 +60,25 @@ export default function HomeParent() {
         }
     }
 
+    // Pass to Answer component to go to next clue or get new category if done 
+    function nextClue(finished) {
+        if (!finished) {
+            setClues({...clueData, clueIndex: clueData.clueIndex + 1});
+        }
+        else {
+            getNewCategory();
+        }
+    }
+
     return (
         <>
             <Topics topics={clueData.topicList} currentTopic={clueData.topic} onTopicChange={switchTopic} />
             <div className="content">
-                <Clue catName={clueData.catName} airDate={clueData.airDate} clue={clueData.clues[clueData.clueIndex]} />
-                <Answer clueData={{catID: clueData.catID, clueIndex: clueData.clueIndex, topic: clueData.topic, userID: 'CMnzc2Myuq'}} />
+                {clueData.clueIndex !== -1 ? 
+                    (<><Clue catName={clueData.catName} airDate={clueData.airDate} clue={clueData.clues[clueData.clueIndex]} /><Answer clueData={{ catID: clueData.catID, clueIndex: clueData.clueIndex, topic: clueData.topic }} nextClue={nextClue} /></>) : <h1>You've run out of clues for this topic! Try a different one.</h1>
+                }
+                <TwitterFeed />
             </div>
-            <TwitterFeed/>
         </>
     );
 };

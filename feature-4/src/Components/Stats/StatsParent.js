@@ -13,7 +13,7 @@ export default function StatsParent() {
             setUserData(results);
             console.log(userData);
         });
-    }, [userData]);
+    }, []);
 
     return (
         <>
